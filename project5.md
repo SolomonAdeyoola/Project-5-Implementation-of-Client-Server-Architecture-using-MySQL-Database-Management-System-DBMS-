@@ -75,9 +75,9 @@ Provided access/logon details into mysql-server (172.31.35.94)
 
 ![MySQL_client ](./images/mysql_client.PNG)
 
-*MySQL_Client Prompt*
+*MySQL-Client Prompt and Connection to MySQL-Server*
 
-
+# Project 5 completed!
 
 
 
