@@ -26,48 +26,59 @@ Opened port 3306 on MySQL-server and allowed access only to MySQL-client IP-172.
 
 *Security group for mysql-server*
 
+### A)  Installation of MySQL-Server
 
-
-
-mysql server
 ubuntu@ip-172-31-35-94:~$
-sudo apt update
-sudo apt install mysql-server
-sudo systemctl enable mysql
-sudo mysql_secure_installation
-sudo mysql
+`sudo apt update`
+`sudo apt install mysql-server`
+`sudo systemctl enable mysql`
+
+Database password validation
+
+`sudo mysql_secure_installation`
+
+configure MySQL server to allow connections from remote hosts by editing file mysqld.cnf,  that is, change the binding address from 127.0.0.1 to 0.0.0.0. 
+
+`sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf `
+
+Then restart mysql afterwards
+
+`sudo systemctl restart mysql`
+
+Login to MySQL
+
+`sudo mysql`
+
 mysql>
-     CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
-     CREATE DATABASE test_db;
-     GRANT ALL ON test_db.* TO 'remote_user'@'%' WITH GRANT OPTION;
-     FLUSH PRIVILEGES;
-     exit
-ubuntu@ip-172-31-35-94:~$
-You might need to configure MySQL server to allow connections from remote hosts.
-sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf  
-changed the binding address from 127.0.0.1 to 0.0.0.0
-sudo systemctl restart mysql
 
-mysql client
+@mysql prompt,
+
+created new database user-remot_user, password-'password' and the database-test_db  
+     
+  `  CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';`
+  `  CREATE DATABASE test_db;`
+  `  GRANT ALL ON test_db.* TO 'remote_user'@'%' WITH GRANT OPTION;`
+  `  FLUSH PRIVILEGES; `
+  `  exit `
+
+
+### B)  Installation of MySQL-Client
+
 ubuntu@ip-172-31-47-224:~$
-sudo apt update -y
-sudo apt install mysql-client -y
-sudo mysql -u remote_user -h 172.31.35.94 -p
 
-Enter password:
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 8
-Server version: 8.0.26-0ubuntu0.20.04.3 (Ubuntu)
+`sudo apt update -y`
+`sudo apt install mysql-client -y`
 
-Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+Provided access/logon details into mysql-server (172.31.35.94)
 
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
+`sudo mysql -u remote_user -h 172.31.35.94 -p`
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+![MySQL_client ](./images/mysql_client.PNG)
 
-    mysql>
+*MySQL_Client Prompt*
+
+
+
 
 
 
