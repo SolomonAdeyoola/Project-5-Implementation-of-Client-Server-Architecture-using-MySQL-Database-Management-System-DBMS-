@@ -1,8 +1,6 @@
 # A Client-Server Archictecture using the implementation of MySQL Database Management (RDMS)
 
-### Client-Server refers to an architecture in which two or more computers are connected together over a network to send and receive requests between one another.
-
-### In their communication, each machine has its own role: the machine sending requests is usually referred as "Client" and the machine responding (serving) is called "Server".
+### Client-Server refers to an architecture in which two or more computers are connected together over a network to send and receive requests between one another. In their communication, each machine has its own role: the machine sending requests is usually referred as "Client" and the machine responding (serving) is called "Server".
 
 ![client_server BASIC](./images/client_server.PNG)
 
@@ -13,4 +11,63 @@
 ![Client-Server Architecture-RDMS ](./images/client_server_RDMS.PNG)
 
 *Fig.2 Client-Server Architecture-RDMS*
+
+#### Step 0 – Spun-off EC2 Instances of Linux Ubuntu Server and Applied basic configurations
+
+Launched EC2 instance of Linux Ubuntu Server 20.04 LTS (HVM) and named it as pbl_p5_mysql-server and pbl_p5_mysql-client. Created security group with SSH port opened and also created and saved my private key to be used for SSH into the EC2 instance. 
+
+![EC2 ](./images/EC2_instances.PNG)
+
+*EC2 Instances-MySQL server and client*
+
+Opened port 3306 on MySQL-server and allowed access only to MySQL-client IP-172.31.47.224/32
+
+![SG ](./images/SG_mysql_server.PNG)
+
+*Security group for mysql-server*
+
+
+
+
+mysql server
+ubuntu@ip-172-31-35-94:~$
+sudo apt update
+sudo apt install mysql-server
+sudo systemctl enable mysql
+sudo mysql_secure_installation
+sudo mysql
+mysql>
+     CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+     CREATE DATABASE test_db;
+     GRANT ALL ON test_db.* TO 'remote_user'@'%' WITH GRANT OPTION;
+     FLUSH PRIVILEGES;
+     exit
+ubuntu@ip-172-31-35-94:~$
+You might need to configure MySQL server to allow connections from remote hosts.
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf  
+changed the binding address from 127.0.0.1 to 0.0.0.0
+sudo systemctl restart mysql
+
+mysql client
+ubuntu@ip-172-31-47-224:~$
+sudo apt update -y
+sudo apt install mysql-client -y
+sudo mysql -u remote_user -h 172.31.35.94 -p
+
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.26-0ubuntu0.20.04.3 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql>
+
+
 
