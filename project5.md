@@ -12,7 +12,7 @@
 
 *Fig.2 Client-Server Architecture-RDMS*
 
-#### Step 0 – Spun-off EC2 Instances of Linux Ubuntu Server and Applied basic configurations
+### Step 0 – Spun-off EC2 Instances of Linux Ubuntu Server and Applied basic configurations
 
 Launched EC2 instance of Linux Ubuntu Server 20.04 LTS (HVM) and named it as pbl_p5_mysql-server and pbl_p5_mysql-client. Created security group with SSH port opened and also created and saved my private key to be used for SSH into the EC2 instance. 
 
@@ -26,7 +26,8 @@ Opened port 3306 on MySQL-server and allowed access only to MySQL-client IP-172.
 
 *Security group for mysql-server*
 
-### A)  Installation of MySQL-Server
+### Step 1 – Installation of MySQL-Server and MySQL-Client
+#### A)  Installation of MySQL-Server
 
 ubuntu@ip-172-31-35-94:~$
 `sudo apt update`
@@ -62,7 +63,7 @@ created new database user-remot_user, password-'password' and the database-test_
   `  exit `
 
 
-### B)  Installation of MySQL-Client
+#### B)  Installation of MySQL-Client
 
 ubuntu@ip-172-31-47-224:~$
 
